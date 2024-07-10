@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Back to top button
   const backToTopButton = document.querySelector(".back-to-top");
   window.addEventListener("scroll", () => {
-    if (window.pageYOffset > 300) {
+    if (window.scrollY > 300) {
       backToTopButton.style.display = "block";
     } else {
       backToTopButton.style.display = "none";
