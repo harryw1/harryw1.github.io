@@ -82,5 +82,5 @@ function animateTimeline() {
   });
 }
 
-// Call the function when the DOM is loaded
+// Call the timeline function when the DOM is loaded
 document.addEventListener("DOMContentLoaded", animateTimeline);
