@@ -1,287 +1,287 @@
 :root {
-  --color-primary: #2d6a4f;
-  --color-secondary: #95d5b2;
-  --color-accent: #d8f3dc;
-  --color-text: #333;
-  --color-background: #f0f7f4;
-  --color-timeline: #b7e4c7;
-  --color-highlight: #ff6b6b;
+    --color-primary: #2d6a4f;
+    --color-secondary: #95d5b2;
+    --color-accent: #d8f3dc;
+    --color-text: #333;
+    --color-background: #f0f7f4;
+    --color-timeline: #b7e4c7;
+    --color-highlight: #ff6b6b;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-size: 16px;
-  line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.dark-mode {
-  --color-primary: #4a9e75;
-  --color-secondary: #3a6b4f;
-  --color-accent: #2b5938;
-  --color-text: #e0e0e0;
-  --color-background: #1e1e1e;
-  --color-timeline: #3a6b4f;
-  --color-highlight: #ff9f43;
+    --color-primary: #4a9e75;
+    --color-secondary: #3a6b4f;
+    --color-accent: #2b5938;
+    --color-text: #e0e0e0;
+    --color-background: #1e1e1e;
+    --color-timeline: #3a6b4f;
+    --color-highlight: #ff9f43;
 }
 
 .header {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary),
-    var(--color-secondary)
-  );
-  color: white;
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        var(--color-primary),
+        var(--color-secondary)
+    );
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url("path-to-your-image.jpg") center/cover no-repeat;
-  opacity: 0.2;
-  z-index: 0;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("path-to-your-image.jpg") center/cover no-repeat;
+    opacity: 0.2;
+    z-index: 0;
 }
 
 .header h1 {
-  margin: 0;
-  font-size: 3rem;
-  letter-spacing: 2px;
-  position: relative;
-  z-index: 1;
+    margin: 0;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
 }
 
 .header p {
-  font-size: 1.2rem;
-  margin-top: 0.5rem;
-  position: relative;
-  z-index: 1;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .section {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  margin-bottom: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .section:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .section h2 {
-  color: var(--color-primary);
-  border-bottom: 2px solid var(--color-secondary);
-  padding-bottom: 0.5rem;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-secondary);
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
 }
 
 .timeline {
-  position: relative;
-  padding: 0;
-  list-style: none;
+    position: relative;
+    padding: 0;
+    list-style: none;
 }
 
 .timeline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 24px;
-  width: 4px;
-  background: var(--color-timeline);
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 24px;
+    width: 4px;
+    background: var(--color-timeline);
 }
 
 .timeline-item {
-  position: relative;
-  margin-bottom: 50px;
-  padding-left: 60px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+    position: relative;
+    margin-bottom: 50px;
+    padding-left: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .timeline-item.show {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .timeline-item::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 0;
-  width: 24px;
-  height: 24px;
-  border: 4px solid var(--color-primary);
-  background: white;
-  border-radius: 50%;
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    border: 4px solid var(--color-primary);
+    background: white;
+    border-radius: 50%;
 }
 
 .timeline-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-content h3 {
-  margin-top: 0;
-  color: var(--color-primary);
+    margin-top: 0;
+    color: var(--color-primary);
 }
 
 .skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .skill-tag {
-  background-color: var(--color-accent);
-  color: var(--color-primary);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
 .skill-tag:hover {
-  background-color: var(--color-primary);
-  color: white;
-  transform: translateY(-2px);
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
 }
 
 .contact-form {
-  display: grid;
-  gap: 1rem;
+    display: grid;
+    gap: 1rem;
 }
 
 .contact-form label {
-  display: block;
-  margin-bottom: 0.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
 .contact-form input,
 .contact-form textarea {
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.2);
-  outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.2);
+    outline: none;
 }
 
 .contact-form button {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
 }
 
 .contact-form button:hover {
-  background-color: #1e4a36;
-  transform: translateY(-2px);
+    background-color: #1e4a36;
+    transform: translateY(-2px);
 }
 
 .social-links {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .social-link {
-  color: white;
-  font-size: 1.5rem;
-  transition: color 0.3s ease, transform 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  z-index: 1000;
+    color: white;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
 }
 
 .social-link:hover {
-  color: var(--color-highlight);
-  transform: scale(1.1);
-  background-color: rgba(255, 255, 255, 0.2);
+    color: var(--color-highlight);
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .projects {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
 }
 
 .project-card {
-  background-color: var(--color-accent);
-  border-radius: 8px;
-  padding: 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--color-accent);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .testimonials {
-  display: grid;
-  gap: 1rem;
+    display: grid;
+    gap: 1rem;
 }
 
 .testimonial {
-  background-color: var(--color-accent);
-  border-radius: 8px;
-  padding: 1rem;
-  font-style: italic;
-  transition: transform 0.3s ease;
+    background-color: var(--color-accent);
+    border-radius: 8px;
+    padding: 1rem;
+    font-style: italic;
+    transition: transform 0.3s ease;
 }
 
 .testimonial:hover {
-  transform: translateY(-3px);
+    transform: translateY(-3px);
 }
 
 .testimonial-author {
-  font-weight: bold;
-  text-align: right;
-  color: var(--color-primary);
+    font-weight: bold;
+    text-align: right;
+    color: var(--color-primary);
 }
 
 /* Dark mode styles */
@@ -289,120 +289,120 @@ body.dark-mode .section,
 body.dark-mode .timeline-content,
 body.dark-mode .project-card,
 body.dark-mode .testimonial {
-  background-color: #2a2a2a;
-  color: var(--color-text);
+    background-color: #2a2a2a;
+    color: var(--color-text);
 }
 
 body.dark-mode .section h2 {
-  color: var(--color-secondary);
+    color: var(--color-secondary);
 }
 
 body.dark-mode .timeline::before {
-  background: var(--color-timeline);
+    background: var(--color-timeline);
 }
 
 body.dark-mode .timeline-item::before {
-  border-color: var(--color-secondary);
-  background: var(--color-background);
+    border-color: var(--color-secondary);
+    background: var(--color-background);
 }
 
 body.dark-mode .skill-tag {
-  background-color: var(--color-accent);
-  color: #ffffff;
+    background-color: var(--color-accent);
+    color: #ffffff;
 }
 
 body.dark-mode .project-card,
 body.dark-mode .testimonial {
-  background-color: var(--color-accent);
-  color: #ffffff;
+    background-color: var(--color-accent);
+    color: #ffffff;
 }
 
 body.dark-mode .contact-form input,
 body.dark-mode .contact-form textarea {
-  background-color: #3a3a3a;
-  border-color: #555;
-  color: var(--color-text);
+    background-color: #3a3a3a;
+    border-color: #555;
+    color: var(--color-text);
 }
 
 body.dark-mode .contact-form button {
-  background-color: var(--color-primary);
-  color: #ffffff;
+    background-color: var(--color-primary);
+    color: #ffffff;
 }
 
 body.dark-mode .contact-form button:hover {
-  background-color: var(--color-secondary);
+    background-color: var(--color-secondary);
 }
 
 body.dark-mode .social-links a {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 body.dark-mode .social-links a:hover {
-  color: var(--color-highlight);
+    color: var(--color-highlight);
 }
 
 .back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--color-primary);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 50%;
-  text-decoration: none;
-  display: none;
-  transition: opacity 0.3s, transform 0.3s;
-  z-index: 1000;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: none;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000;
 }
 
 .back-to-top:hover {
-  opacity: 0.8;
-  transform: translateY(-3px);
+    opacity: 0.8;
+    transform: translateY(-3px);
 }
 
 .dark-mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: var(--color-primary);
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  z-index: 1000;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 1000;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
 }
 
 .dark-mode-toggle:hover {
-  background-color: var(--color-secondary);
-  transform: rotate(15deg);
+    background-color: var(--color-secondary);
+    transform: rotate(15deg);
 }
 
 @media (max-width: 768px) {
-  .header h1 {
-    font-size: 2.5rem;
-  }
+    .header h1 {
+        font-size: 2.5rem;
+    }
 
-  .section {
-    padding: 1.5rem;
-  }
+    .section {
+        padding: 1.5rem;
+    }
 
-  .timeline-item {
-    padding-left: 40px;
-  }
+    .timeline-item {
+        padding-left: 40px;
+    }
 
-  .timeline::before {
-    left: 15px;
-  }
+    .timeline::before {
+        left: 15px;
+    }
 
-  .timeline-item::before {
-    left: 0;
-  }
+    .timeline-item::before {
+        left: 0;
+    }
 }
