@@ -49,7 +49,6 @@ body.dark-mode {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("path-to-your-image.jpg") center/cover no-repeat;
     opacity: 0.2;
     z-index: 0;
 }
