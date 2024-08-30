@@ -14,11 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Back to top button
   const backToTopButton = document.querySelector(".back-to-top");
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      backToTopButton.style.display = "block";
-    } else {
-      backToTopButton.style.display = "none";
-    }
+    backToTopButton.style.display = window.scrollY > 300 ? "block" : "none";
   });
 
   backToTopButton.addEventListener("click", (e) => {
@@ -27,14 +23,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Lazy load images and other media
-  var lazyElements = [].slice.call(
+  const lazyElements = Array.from(
     document.querySelectorAll("img.lazy, iframe.lazy")
   );
   if ("IntersectionObserver" in window) {
-    let lazyObserver = new IntersectionObserver(function (entries, observer) {
-      entries.forEach(function (entry) {
+    const lazyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          let lazyElement = entry.target;
+          const lazyElement = entry.target;
           lazyElement.src = lazyElement.dataset.src;
           lazyElement.classList.remove("lazy");
           lazyObserver.unobserve(lazyElement);
@@ -42,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    lazyElements.forEach(function (lazyElement) {
+    lazyElements.forEach((lazyElement) => {
       lazyObserver.observe(lazyElement);
     });
   }
