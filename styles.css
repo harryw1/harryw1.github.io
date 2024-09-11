@@ -361,7 +361,7 @@ body.dark-mode .social-links a:hover {
     right: 20px;
     background-color: var(--color-primary);
     color: white;
-    padding: 15px 15px;
+    padding: 10px 20px;
     border-radius: 50%;
     text-decoration: none;
     display: none;
