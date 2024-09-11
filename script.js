@@ -1,16 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Script loaded");
 
-  // Smooth scrolling
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute("href")).scrollIntoView({
-        behavior: "smooth",
-      });
-    });
-  });
-
   // Back to top button
   const backToTopButton = document.querySelector(".back-to-top");
   window.addEventListener("scroll", () => {
@@ -24,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Lazy load images and other media
   const lazyElements = Array.from(
-    document.querySelectorAll("img.lazy, iframe.lazy")
+    document.querySelectorAll("img.lazy, iframe.lazy"),
   );
   if ("IntersectionObserver" in window) {
     const lazyObserver = new IntersectionObserver((entries) => {
@@ -70,7 +60,7 @@ function animateTimeline() {
         }
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.1 },
   );
 
   timelineItems.forEach((item) => {
