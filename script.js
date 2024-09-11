@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Back to top button
   const backToTopButton = document.querySelector(".back-to-top");
-  Window.addEventListener("scroll", () => {
+  window.addEventListener("scroll", () => {
     if (window.scrollY > 100) {
       backToTopButton.classList.add("show");
     } else {
