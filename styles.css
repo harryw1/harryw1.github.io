@@ -296,6 +296,11 @@ body.dark-mode {
     padding-bottom: var(--space-sm);
 }
 
+.section h2:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 .section h2:after {
     content: '';
     position: absolute;

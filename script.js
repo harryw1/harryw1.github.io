@@ -252,43 +252,45 @@ function initSmoothScroll() {
           const header = document.querySelector(".header");
           header.classList.add("scrolled");
           
-          // Get header height after ensuring scrolled class is applied
-          // Use a shorter timeout to ensure the class change has taken effect
-          setTimeout(() => {
-            // Fix for section navigation - use compact header height
-            const headerHeight = header.offsetHeight + 10; // Add small padding
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          // Force repaint to make sure the header has been updated
+          void header.offsetHeight;
+          
+          // Fix for section navigation - use compact header height
+          const headerHeight = header.offsetHeight + 10; // Add small padding
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          // Smoother scrolling with requestAnimationFrame
+          const startPosition = window.pageYOffset;
+          const distance = targetPosition - startPosition;
+          const duration = 400; // ms - faster for better responsiveness
+          let startTime = null;
+          
+          function animateScroll(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
             
-            // Smoother scrolling with requestAnimationFrame
-            const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition;
-            const duration = 600; // ms - slightly faster for better responsiveness
-            let startTime = null;
+            // Easing function for smoother transition
+            const easeOutQuad = progress => 1 - (1 - progress) * (1 - progress);
             
-            function animateScroll(currentTime) {
-              if (startTime === null) startTime = currentTime;
-              const timeElapsed = currentTime - startTime;
-              const progress = Math.min(timeElapsed / duration, 1);
-              
-              // Easing function for smoother transition
-              const easeInOutCubic = progress => 
-                progress < 0.5
-                  ? 4 * progress * progress * progress
-                  : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-                  
-              window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
-              
-              if (timeElapsed < duration) {
-                requestAnimationFrame(animateScroll);
-              } else {
-                // Set focus to the target element for accessibility
-                targetElement.setAttribute('tabindex', '-1');
-                targetElement.focus();
-              }
+            window.scrollTo({
+              top: startPosition + distance * easeOutQuad(progress),
+              behavior: 'auto' // Using our custom animation, not native smooth scroll
+            });
+            
+            if (timeElapsed < duration) {
+              requestAnimationFrame(animateScroll);
+            } else {
+              // Don't set focus to the target element - it causes the blue outline
+              // Just make sure we're at the exact position
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'auto'
+              });
             }
-            
-            requestAnimationFrame(animateScroll);
-          }, 10);
+          }
+          
+          requestAnimationFrame(animateScroll);
         }
       }
     });
@@ -298,10 +300,10 @@ function initSmoothScroll() {
 // Enhance navigation accessibility
 function enhanceNavigationAccessibility() {
   const navLinks = document.querySelectorAll('.nav-links a');
+  const mainSections = document.querySelectorAll('section[id]'); // Only sections with IDs
   
   // Add active state to navigation based on scroll position
   function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section');
     // Account for fixed header height
     const headerHeight = document.querySelector('.header').offsetHeight;
     const scrollPosition = window.scrollY + headerHeight + 50; // Add offset for better detection
@@ -313,7 +315,7 @@ function enhanceNavigationAccessibility() {
     });
     
     // Find the current section in view
-    for (const section of sections) {
+    for (const section of mainSections) {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
       const sectionId = section.getAttribute('id');
@@ -327,6 +329,22 @@ function enhanceNavigationAccessibility() {
         if (matchingLink) {
           matchingLink.classList.add('active');
           matchingLink.setAttribute('aria-current', 'true');
+          
+          // Find the parent nav element for mobile scrolling
+          const navContainer = document.querySelector('.nav-links');
+          if (navContainer && window.innerWidth <= 768) {
+            // Calculate position to center the active item
+            const navWidth = navContainer.offsetWidth;
+            const linkPos = matchingLink.offsetLeft;
+            const linkWidth = matchingLink.offsetWidth;
+            const scrollPos = linkPos - (navWidth / 2) + (linkWidth / 2);
+            
+            // Smooth scroll to center active item
+            navContainer.scrollTo({
+              left: Math.max(0, scrollPos),
+              behavior: 'smooth'
+            });
+          }
         }
         
         // Only highlight one section at a time
@@ -337,7 +355,7 @@ function enhanceNavigationAccessibility() {
   
   // Use throttled event listener for better performance
   let lastScrollTime = 0;
-  const scrollThrottle = 100; // ms
+  const scrollThrottle = 150; // ms - slightly longer for better performance
   
   window.addEventListener('scroll', function() {
     const now = Date.now();
@@ -350,8 +368,9 @@ function enhanceNavigationAccessibility() {
   // Also update on page resize for reliability
   window.addEventListener('resize', updateActiveNavLink, { passive: true });
   
-  // Initial check
-  setTimeout(updateActiveNavLink, 100);
+  // Initial check after page loads completely
+  window.addEventListener('load', updateActiveNavLink);
+  setTimeout(updateActiveNavLink, 200); // Backup in case load event already fired
 }
 
 // Improve keyboard navigation for skill tags with performance optimization
