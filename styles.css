@@ -1,3 +1,24 @@
+/* Skip to main content link */
+.skip-to-main {
+    position: absolute;
+    top: -50px;
+    left: 10px;
+    z-index: 9999;
+    padding: 8px 15px;
+    background-color: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 0 0 4px 4px;
+    transition: top 0.3s ease;
+    font-weight: bold;
+}
+
+.skip-to-main:focus {
+    top: 0;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
 :root {
     --color-primary: #2d6a4f;
     --color-secondary: #95d5b2;
@@ -19,7 +40,8 @@ body {
     line-height: 1.6;
     transition:
         background-color 0.3s ease,
-        color 0.3s ease;
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 body.dark-mode {
@@ -172,7 +194,18 @@ body.dark-mode {
     transition: all 0.3s ease;
 }
 
+.skill-tag:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(149, 213, 178, 0.7);
+}
+
 .skill-tag:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.skill-tag-active {
     background-color: var(--color-primary);
     color: white;
     transform: translateY(-2px);
@@ -238,7 +271,8 @@ body.dark-mode {
     font-size: 1.5rem;
     transition:
         color 0.3s ease,
-        transform 0.3s ease;
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -247,6 +281,12 @@ body.dark-mode {
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.1);
     z-index: 1000;
+}
+
+.social-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    color: var(--color-highlight);
 }
 
 .social-link:hover {
@@ -267,12 +307,26 @@ body.dark-mode {
     padding: 1rem;
     transition:
         transform 0.3s ease,
-        box-shadow 0.3s ease;
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.project-card.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.project-card:hover h3 {
+    color: white;
 }
 
 .testimonials {
@@ -325,6 +379,17 @@ body.dark-mode .skill-tag {
     color: #ffffff;
 }
 
+/* Improve color contrast in dark mode */
+body.dark-mode .timeline-content h3,
+body.dark-mode .section h2,
+body.dark-mode .project-card h3 {
+    color: #a5e8c5; /* Lighter green for better contrast */
+}
+
+body.dark-mode .project-card:hover h3 {
+    color: #ffffff;
+}
+
 body.dark-mode .project-card,
 body.dark-mode .testimonial {
     background-color: var(--color-accent);
@@ -367,13 +432,19 @@ body.dark-mode .social-links a:hover {
     display: none;
     transition:
         opacity 0.3s,
-        transform 0.3s;
+        transform 0.3s,
+        box-shadow 0.3s;
     z-index: 1000;
 }
 
 .back-to-top:hover {
     opacity: 0.8;
     transform: translateY(-3px);
+}
+
+.back-to-top:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(149, 213, 178, 0.5);
 }
 
 .dark-mode-toggle {
@@ -387,8 +458,9 @@ body.dark-mode .social-links a:hover {
     border-radius: 50%;
     cursor: pointer;
     transition:
-        background-color 0.3s,
-        transform 0.3s;
+        background-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     z-index: 1000;
     width: 40px;
     height: 40px;
@@ -396,11 +468,27 @@ body.dark-mode .social-links a:hover {
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .dark-mode-toggle:hover {
     background-color: var(--color-secondary);
-    transform: rotate(15deg);
+    transform: rotate(15deg) scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #f9a825; /* Yellowish color for sun icon */
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #ffb74d;
+}
+
+/* Focus styles for better accessibility */
+.dark-mode-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(149, 213, 178, 0.5);
 }
 
 @media (max-width: 768px) {
