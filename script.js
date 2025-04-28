@@ -6,21 +6,47 @@ document.addEventListener("DOMContentLoaded", function () {
   enhanceAccessibility();
 });
 
-// Back to top functionality
+// Back to top functionality with performance optimizations
 function initBackToTop() {
   const backToTopButton = document.querySelector(".back-to-top");
   if (!backToTopButton) return;
   
+  // Throttle scroll event for better performance
+  let lastScrollTime = 0;
+  const scrollThreshold = 300;
+  let isVisible = false;
+  const throttleTime = 100; // ms between scroll checks
+  
   function handleBackToTopVisibility() {
-    backToTopButton.style.display = window.scrollY > 300 ? "flex" : "none";
+    const now = Date.now();
+    if (now - lastScrollTime < throttleTime) return;
+    
+    lastScrollTime = now;
+    const shouldBeVisible = window.scrollY > scrollThreshold;
+    
+    // Only update DOM if visibility changes
+    if (shouldBeVisible !== isVisible) {
+      isVisible = shouldBeVisible;
+      backToTopButton.style.display = isVisible ? "flex" : "none";
+    }
   }
   
-  window.addEventListener("scroll", handleBackToTopVisibility);
+  // Use passive listener for better scroll performance
+  window.addEventListener("scroll", handleBackToTopVisibility, { passive: true });
   handleBackToTopVisibility(); // Initial check
   
   backToTopButton.addEventListener("click", (e) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Smoother scroll with requestAnimationFrame for better performance
+    const scrollToTop = () => {
+      const position = window.scrollY;
+      if (position > 0) {
+        // Using smaller steps for smoother scrolling
+        window.scrollTo(0, position - Math.max(position / 10, 10));
+        requestAnimationFrame(scrollToTop);
+      }
+    };
+    requestAnimationFrame(scrollToTop);
   });
 }
 
@@ -79,51 +105,59 @@ function initDarkMode() {
   });
 }
 
-// Animation functionality
+// Animation functionality with performance optimizations
 function initAnimations() {
-  animateTimeline();
-  animateProjectCards();
+  // Use a single IntersectionObserver for both timeline and project cards
+  // to reduce the number of observers
+  animateElements();
 }
 
-// Timeline animation
-function animateTimeline() {
-  const timelineItems = document.querySelectorAll(".timeline-item");
-  if (timelineItems.length === 0) return;
+// Unified animation function for better performance
+function animateElements() {
+  const animatedElements = document.querySelectorAll(".timeline-item, .project-card");
+  if (animatedElements.length === 0) return;
   
-  const observer = new IntersectionObserver(
-    (entries) => {
+  // Optimize IntersectionObserver options
+  const observerOptions = {
+    // Lower threshold for earlier detection
+    threshold: 0.05,
+    // Add rootMargin to trigger animations a bit earlier
+    rootMargin: "50px 0px",
+  };
+  
+  // Reuse a single observer for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    // Use requestAnimationFrame for smoother animations
+    requestAnimationFrame(() => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("show");
+          // Unobserve after animation to save resources
+          observer.unobserve(entry.target);
         }
       });
-    },
-    { threshold: 0.1 }
-  );
+    });
+  }, observerOptions);
   
-  timelineItems.forEach((item) => {
-    observer.observe(item);
-  });
-}
-
-// Project cards animation
-function animateProjectCards() {
-  const projectCards = document.querySelectorAll(".project-card");
-  if (projectCards.length === 0) return;
+  // Stagger the observation of elements to improve initial load
+  let delay = 0;
+  const staggerAmount = 50; // ms between batches
   
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+  // Group elements into smaller batches for smoother loading
+  const batchSize = 5;
+  const batches = [];
   
-  projectCards.forEach((card) => {
-    observer.observe(card);
+  // Create batches for staggered animation
+  for (let i = 0; i < animatedElements.length; i += batchSize) {
+    batches.push(Array.from(animatedElements).slice(i, i + batchSize));
+  }
+  
+  // Observe each batch with a staggered delay
+  batches.forEach(batch => {
+    setTimeout(() => {
+      batch.forEach(element => observer.observe(element));
+    }, delay);
+    delay += staggerAmount;
   });
 }
 
@@ -132,21 +166,36 @@ function enhanceAccessibility() {
   enhanceSkillTagsKeyboardNavigation();
 }
 
-// Improve keyboard navigation for skill tags
+// Improve keyboard navigation for skill tags with performance optimization
 function enhanceSkillTagsKeyboardNavigation() {
-  const skillTags = document.querySelectorAll('.skill-tag');
-  if (skillTags.length === 0) return;
+  const skillsContainer = document.querySelector('.skills-list');
+  if (!skillsContainer) return;
   
-  skillTags.forEach(tag => {
-    tag.addEventListener('keydown', (e) => {
-      // If Enter or Space is pressed, trigger the hover effect
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        tag.classList.add('skill-tag-active');
-        setTimeout(() => {
-          tag.classList.remove('skill-tag-active');
+  // Use event delegation instead of multiple listeners
+  skillsContainer.addEventListener('keydown', (e) => {
+    // Only process if target is a skill tag
+    if (!e.target.classList.contains('skill-tag')) return;
+    
+    // If Enter or Space is pressed, trigger the hover effect
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      
+      // Use requestAnimationFrame for better performance
+      requestAnimationFrame(() => {
+        e.target.classList.add('skill-tag-active');
+        
+        // Clear existing timeout if any
+        const tagId = e.target.dataset.animTimeout;
+        if (tagId) window.clearTimeout(parseInt(tagId));
+        
+        // Set new timeout and store its ID
+        const timeoutId = window.setTimeout(() => {
+          e.target.classList.remove('skill-tag-active');
+          delete e.target.dataset.animTimeout;
         }, 300);
-      }
-    });
+        
+        e.target.dataset.animTimeout = timeoutId;
+      });
+    }
   });
 }

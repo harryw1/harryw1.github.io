@@ -25,6 +25,14 @@
     --color-grey-light: #f5f5f5;
     --color-grey: #dddddd;
     
+    /* Skeuomorphic elements - optimized */
+    --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-hard: 0 3px 6px rgba(0, 0, 0, 0.12);
+    /* Replaced heavy texture images with lightweight CSS patterns */
+    --texture-paper: none;
+    --texture-linen: none;
+    
     /* Functional color mappings */
     --color-text: var(--color-black);
     --color-background: var(--color-white);
@@ -66,13 +74,13 @@ body {
     color: var(--color-text);
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
-    transition: 
-        background-color var(--transition-standard),
-        color var(--transition-standard),
-        border-color var(--transition-standard);
+    /* Simplified transitions to just one property for better performance */
+    transition: background-color var(--transition-standard);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Add hardware acceleration for smoother rendering */
+    will-change: background-color;
 }
 
 body.dark-mode {
@@ -87,6 +95,11 @@ body.dark-mode {
     --color-accent: var(--color-blue);
     --color-muted: #bbbbbb;
     --color-border: var(--color-grey);
+    
+    /* Dark mode shadow adjustments */
+    --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.25);
+    --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --shadow-hard: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 .header {
@@ -94,10 +107,16 @@ body.dark-mode {
     color: var(--color-accent);
     padding: var(--space-double) 0;
     text-align: center;
-    position: relative;
     border-bottom: 1px solid var(--color-border);
     margin-bottom: var(--space-triple);
+    /* Simplified shadow */
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    /* Hardware acceleration */
+    transform: translateZ(0);
 }
+
+/* Remove expensive gradient pseudo-element */
 
 .header h1 {
     margin: 0;
@@ -105,6 +124,7 @@ body.dark-mode {
     font-weight: var(--font-weight-normal);
     letter-spacing: -0.01em;
     line-height: var(--line-height-heading);
+    /* Remove text shadow for better performance */
 }
 
 .header p {
@@ -117,16 +137,24 @@ body.dark-mode {
     max-width: 760px;
     margin: 0 auto;
     padding: 0 var(--space-base);
+    /* Remove expensive background effects */
+    background-color: var(--color-background);
 }
 
 .section {
     background-color: var(--color-background);
-    padding: var(--space-triple) 0;
+    padding: var(--space-triple) var(--space-base);
     margin-bottom: var(--space-triple);
     border-bottom: 1px solid var(--color-border);
+    border-radius: 6px;
+    /* Simplified shadow */
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    /* Hardware acceleration */
+    transform: translateZ(0);
 }
 
-/* Remove hover effects for sections to make design more minimal */
+/* Remove complicated pseudo-element with gradient */
 
 .section h2 {
     color: var(--color-text);
@@ -135,6 +163,20 @@ body.dark-mode {
     margin-top: 0;
     margin-bottom: var(--space-double);
     line-height: var(--line-height-heading);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+    position: relative;
+    display: inline-block;
+}
+
+.section h2:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+    opacity: 0.7;
 }
 
 .timeline {
@@ -158,20 +200,34 @@ body.dark-mode {
     margin-bottom: var(--space-double);
     padding-left: var(--space-base);
     opacity: 0;
-    transform: translateY(var(--space-half));
+    /* Optimize by only animating one property */
     transition: opacity var(--transition-standard);
+    /* Hardware acceleration */
+    will-change: opacity;
 }
 
 .timeline-item.show {
     opacity: 1;
-    transform: translateY(0);
 }
 
 /* Remove the visual timeline marker and rely on spacing for hierarchy */
 
 .timeline-content {
-    background: transparent;
-    padding: 0;
+    background-color: var(--color-background);
+    padding: var(--space-base);
+    border-radius: 5px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.05);
+    /* Optimize by using single transform property for transition */
+    transition: transform 0.2s ease;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+}
+
+.timeline-content:hover {
+    transform: translateY(-2px) translateZ(0);
+    /* Keep the shadow consistent to avoid repainting */
 }
 
 .timeline-content h3 {
@@ -180,6 +236,7 @@ body.dark-mode {
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-normal);
     color: var(--color-text);
+    /* Remove text shadow for performance */
 }
 
 .timeline-content p {
@@ -191,6 +248,8 @@ body.dark-mode {
 .timeline-content p:first-of-type {
     font-weight: var(--font-weight-normal);
     color: var(--color-text);
+    border-left: 2px solid var(--color-accent);
+    padding-left: var(--space-half);
 }
 
 .skills-list {
@@ -203,14 +262,28 @@ body.dark-mode {
     background-color: var(--color-grey-light);
     color: var(--color-text);
     padding: var(--space-quarter) var(--space-base);
-    border: none;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 18px;
     font-size: var(--font-size-small);
-    transition: background-color var(--transition-standard);
+    /* Optimize transitions by only using transform */
+    transition: transform var(--transition-standard);
+    /* Simplify shadow to improve performance */
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    /* Enable hardware acceleration */
+    transform: translateZ(0);
+}
+
+/* Remove expensive gradient pseudo-element */
+
+.skill-tag:hover {
+    transform: translateY(-1px) translateZ(0);
+    /* No box-shadow changes on hover to reduce painting */
 }
 
 .skill-tag:focus {
     outline: none;
-    box-shadow: 0 0 0 1px var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent), var(--shadow-soft);
 }
 
 
@@ -289,16 +362,42 @@ body.dark-mode {
 .project-card {
     border: 1px solid var(--color-border);
     padding: var(--space-base);
+    /* Optimize by only using opacity transition */
     transition: opacity var(--transition-standard);
     opacity: 0;
+    border-radius: 8px;
+    /* Simplified shadow */
+    box-shadow: var(--shadow-soft);
+    background-color: var(--color-white);
+    position: relative;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    /* Specify performance critical properties */
+    will-change: opacity, transform;
 }
+
+/* Single minimal accent bar at top */
+.project-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-accent);
+    opacity: 0.7;
+}
+
+/* Remove expensive gradient pseudo-element */
 
 .project-card.show {
     opacity: 1;
 }
 
 .project-card:hover {
-    background-color: var(--color-grey-light);
+    /* Smaller transform distance for smoother performance */
+    transform: translateY(-2px) translateZ(0);
+    /* No box-shadow changes on hover to avoid repainting */
 }
 
 .project-card h3 {
@@ -306,6 +405,8 @@ body.dark-mode {
     font-weight: var(--font-weight-normal);
     margin-top: 0;
     margin-bottom: var(--space-base);
+    color: var(--color-accent);
+    /* Remove text shadow for performance */
 }
 .testimonials {
     display: grid;
@@ -342,22 +443,39 @@ body.dark-mode {
     border: none;
     text-decoration: none;
     display: none;
-    transition: opacity var(--transition-standard);
+    /* Optimize transition to only transform */
+    transition: transform var(--transition-standard);
     z-index: 100;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
+    /* Simplify shadow */
+    box-shadow: var(--shadow-soft);
+    font-weight: bold;
+    border: 1px solid rgba(0,0,0,0.1);
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
 }
 
+/* Remove expensive gradient pseudo-element */
+
 .back-to-top:hover {
-    opacity: 0.8;
+    transform: translateY(-2px) translateZ(0);
+    /* No shadow changes on hover */
+}
+
+.back-to-top:active {
+    transform: translateY(1px) translateZ(0);
+    /* No shadow changes on active state */
 }
 
 .back-to-top:focus {
     outline: none;
-    box-shadow: 0 0 0 1px var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(0,102,204,0.3);
 }
 
 /* Dark mode toggle */
@@ -370,7 +488,8 @@ body.dark-mode {
     padding: var(--space-half);
     border: none;
     cursor: pointer;
-    transition: opacity var(--transition-standard);
+    /* Optimize transitions to only transform */
+    transition: transform var(--transition-standard);
     z-index: 100;
     width: 40px;
     height: 40px;
@@ -378,15 +497,31 @@ body.dark-mode {
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-large);
+    border-radius: 50%;
+    /* Simplify shadows */
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0,0,0,0.1);
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
 }
 
+/* Remove expensive gradient pseudo-element */
+
 .dark-mode-toggle:hover {
-    opacity: 0.8;
+    /* Simpler transform for better performance */
+    transform: translateY(-2px) translateZ(0);
+    /* No shadow changes on hover */
+}
+
+.dark-mode-toggle:active {
+    transform: translateY(1px) translateZ(0);
+    /* No shadow changes on active state */
 }
 
 .dark-mode-toggle:focus {
     outline: none;
-    box-shadow: 0 0 0 1px var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(0,102,204,0.3);
 }
 
 /* Dark mode version of toggle uses same styles but different icon */
