@@ -120,19 +120,21 @@ body.dark-mode {
 .header {
     background-color: var(--color-background);
     color: var(--color-primary);
-    padding: var(--space-lg) 0;
+    padding: var(--space-xl) 0 0;
     text-align: center;
     border-bottom: 1px solid var(--color-border);
     margin-bottom: var(--space-2xl);
     box-shadow: var(--shadow-soft);
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     transform: translateZ(0);
 }
 
 .header-content {
     max-width: 760px;
     margin: 0 auto;
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-xl);
 }
 
 .header h1 {
@@ -145,7 +147,7 @@ body.dark-mode {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
+    color: transparent;
     display: inline-block;
 }
 
@@ -162,7 +164,7 @@ body.dark-mode {
 .main-nav {
     margin-top: var(--space-lg);
     background-color: var(--color-grey-light);
-    padding: var(--space-sm) 0;
+    padding: var(--space-md) 0;
 }
 
 .nav-links {
@@ -171,7 +173,7 @@ body.dark-mode {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: var(--space-md);
+    gap: var(--space-xl);
     flex-wrap: wrap;
 }
 
@@ -183,10 +185,12 @@ body.dark-mode {
     text-decoration: none;
     color: var(--color-secondary);
     font-weight: var(--font-weight-medium);
-    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-md);
+    padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-sm);
     transition: all var(--transition-standard);
     position: relative;
+    display: inline-block;
 }
 
 .nav-links a:hover {
@@ -224,7 +228,7 @@ body.dark-mode {
 
 .section {
     background-color: var(--color-background);
-    padding: var(--space-2xl) var(--space-md);
+    padding: var(--space-2xl) var(--space-xl);
     margin-bottom: var(--space-2xl);
     border: 1px solid var(--color-grey);
     border-radius: var(--radius-md);
@@ -234,28 +238,29 @@ body.dark-mode {
     transition: transform var(--transition-standard), box-shadow var(--transition-standard);
 }
 
+/* Remove hover transform on sections to prevent layout jumps */
 .section:hover {
-    transform: translateY(-5px) translateZ(0);
     box-shadow: var(--shadow-hard);
 }
 
 .section h2 {
     color: var(--color-primary);
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
     margin-top: 0;
     margin-bottom: var(--space-xl);
     line-height: var(--line-height-tight);
     position: relative;
     display: inline-block;
+    padding-bottom: var(--space-sm);
 }
 
 .section h2:after {
     content: '';
     position: absolute;
-    bottom: -12px;
+    bottom: -4px;
     left: 0;
-    width: 60px;
+    width: 80px;
     height: 3px;
     background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
     border-radius: 3px;
@@ -296,35 +301,35 @@ body.dark-mode {
 
 .timeline-content {
     background-color: var(--color-background);
-    padding: var(--space-base);
-    border-radius: 5px;
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-soft);
     position: relative;
-    border: 1px solid rgba(0,0,0,0.05);
-    /* Optimize by using single transform property for transition */
-    transition: transform 0.2s ease;
-    /* Hardware acceleration */
+    border: 1px solid var(--color-grey);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform: translateZ(0);
+    margin-bottom: var(--space-lg);
 }
 
 .timeline-content:hover {
-    transform: translateY(-2px) translateZ(0);
-    /* Keep the shadow consistent to avoid repainting */
+    transform: translateY(-5px) translateZ(0);
+    box-shadow: var(--shadow-medium);
 }
 
 .timeline-content h3 {
     margin-top: 0;
-    margin-bottom: var(--space-half);
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-normal);
-    color: var(--color-text);
-    /* Remove text shadow for performance */
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-secondary);
 }
 
 .timeline-content p {
-    margin-top: var(--space-quarter);
-    margin-bottom: var(--space-base);
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-md);
     color: var(--color-muted);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-relaxed);
 }
 
 .timeline-content p:first-of-type {
@@ -380,8 +385,9 @@ body.dark-mode {
 .contact-options {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-md);
-    margin-top: var(--space-lg);
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+    justify-content: center;
 }
 
 .contact-option {
@@ -391,13 +397,14 @@ body.dark-mode {
     text-decoration: none;
     color: var(--color-secondary);
     background-color: var(--color-grey-light);
-    padding: var(--space-md);
+    padding: var(--space-xl) var(--space-lg);
     border-radius: var(--radius-md);
     transition: all var(--transition-standard);
-    min-width: 160px;
-    flex: 1;
+    min-width: 180px;
+    flex: 0 1 25%;
     text-align: center;
     border: 1px solid var(--color-grey);
+    box-shadow: var(--shadow-soft);
 }
 
 .contact-option i {
@@ -409,6 +416,8 @@ body.dark-mode {
 
 .contact-option span {
     font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-md);
+    margin-top: var(--space-sm);
 }
 
 .contact-option:hover {
@@ -420,6 +429,12 @@ body.dark-mode {
 
 .contact-option:hover i {
     transform: scale(1.1);
+}
+
+.contact-option:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 147, 111, 0.4);
+    transform: translateY(-2px);
 }
 
 .resume-download {
@@ -461,7 +476,7 @@ body.dark-mode {
 
 .project-card {
     border: 1px solid var(--color-grey);
-    padding: var(--space-lg);
+    padding: var(--space-xl);
     transition: all var(--transition-standard);
     opacity: 0;
     border-radius: var(--radius-md);
@@ -471,6 +486,10 @@ body.dark-mode {
     transform: translateZ(0);
     will-change: opacity, transform;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 230px;
 }
 
 .project-card:before {
@@ -520,8 +539,15 @@ body.dark-mode {
     color: var(--color-secondary);
 }
 
+.project-card p {
+    flex-grow: 1;
+    margin-bottom: var(--space-lg);
+    line-height: var(--line-height-relaxed);
+    font-size: var(--font-size-md);
+}
+
 .project-metrics {
-    margin-top: var(--space-md);
+    margin-top: auto;
     padding-top: var(--space-sm);
     border-top: 1px dashed var(--color-grey);
 }
@@ -531,12 +557,13 @@ body.dark-mode {
     align-items: center;
     font-size: var(--font-size-sm);
     color: var(--color-primary);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-bold);
 }
 
 .metric i {
     margin-right: var(--space-xs);
     font-size: 0.8em;
+    color: var(--color-accent);
 }
 .testimonials {
     display: grid;
@@ -658,6 +685,10 @@ body.dark-mode {
 /* Icon is changed in JavaScript */
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .header {
+        padding: var(--space-md) 0 0;
+    }
+    
     .header h1 {
         font-size: var(--font-size-2xl);
     }
@@ -668,15 +699,23 @@ body.dark-mode {
     
     .main-nav {
         margin-top: var(--space-md);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: var(--space-sm) 0;
     }
     
     .nav-links {
-        gap: var(--space-sm);
+        gap: var(--space-xs);
+        justify-content: flex-start;
+        padding: 0 var(--space-sm);
+        min-width: min-content;
+        width: 100%;
     }
     
     .nav-links a {
         padding: var(--space-xs) var(--space-xs);
         font-size: var(--font-size-sm);
+        white-space: nowrap;
     }
 
     .section {
