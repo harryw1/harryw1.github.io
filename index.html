@@ -40,27 +40,39 @@
             🌙
         </button>
         <header class="header">
-            <h1>Harrison Weiss</h1>
-            <p>Sustainability Professional</p>
-            <nav class="social-links" aria-label="Social media links">
-                <a
-                    href="https://www.linkedin.com/in/harrisonrweiss1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn Profile"
-                    class="social-link"
-                >
-                    <i class="fab fa-linkedin" aria-hidden="true"></i>
-                </a>
-                <a
-                    href="https://github.com/harryw1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub Profile"
-                    class="social-link"
-                >
-                    <i class="fab fa-github" aria-hidden="true"></i>
-                </a>
+            <div class="header-content">
+                <h1>Harrison Weiss</h1>
+                <p class="subtitle">Sustainability Professional</p>
+                <nav class="social-links" aria-label="Social media links">
+                    <a
+                        href="https://www.linkedin.com/in/harrisonrweiss1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn Profile"
+                        class="social-link"
+                    >
+                        <i class="fab fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a
+                        href="https://github.com/harryw1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub Profile"
+                        class="social-link"
+                    >
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                    </a>
+                </nav>
+            </div>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="#about-heading">About</a></li>
+                    <li><a href="#experience-heading">Experience</a></li>
+                    <li><a href="#education-heading">Education</a></li>
+                    <li><a href="#skills-heading">Skills</a></li>
+                    <li><a href="#projects-heading">Projects</a></li>
+                    <li><a href="#contact-section">Contact</a></li>
+                </ul>
             </nav>
         </header>
 
@@ -256,28 +268,65 @@
                 <h2 id="projects-heading">Projects</h2>
                 <div class="projects">
                     <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-leaf" aria-hidden="true"></i>
+                        </div>
                         <h3>Corporate Sustainability Plan</h3>
                         <p>
                             Developed and implemented the first
                             comprehensive sustainability plan for NJ
                             TRANSIT.
                         </p>
+                        <div class="project-metrics">
+                            <span class="metric"><i class="fas fa-check-circle"></i> Reduced carbon footprint by 15%</span>
+                        </div>
                     </div>
                     <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-solar-panel" aria-hidden="true"></i>
+                        </div>
                         <h3>Clean Energy Fund Acquisition</h3>
                         <p>
                             Secured over $2 million in State clean energy
                             funds for energy-efficiency projects.
                         </p>
+                        <div class="project-metrics">
+                            <span class="metric"><i class="fas fa-check-circle"></i> $1.5M in energy savings</span>
+                        </div>
                     </div>
                     <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        </div>
                         <h3>Greenhouse Gas Emissions Reporting</h3>
                         <p>
                             Led the creation and implementation of GHG
                             emissions reporting for public transportation
                             clients.
                         </p>
+                        <div class="project-metrics">
+                            <span class="metric"><i class="fas fa-check-circle"></i> Established reporting standard</span>
+                        </div>
                     </div>
+                </div>
+            </section>
+            
+            <section id="contact-section" class="section" aria-labelledby="contact-heading">
+                <h2 id="contact-heading">Contact</h2>
+                <p class="contact-intro">Interested in sustainability consulting or have questions about environmental initiatives? Let's connect.</p>
+                <div class="contact-options">
+                    <a href="mailto:your-email@example.com" class="contact-option">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Me</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/harrisonrweiss1" target="_blank" rel="noopener noreferrer" class="contact-option">
+                        <i class="fab fa-linkedin"></i>
+                        <span>Connect on LinkedIn</span>
+                    </a>
+                    <a href="#" class="contact-option resume-download">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download Resume</span>
+                    </a>
                 </div>
             </section>
         </main>

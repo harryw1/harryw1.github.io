@@ -110,6 +110,8 @@ function initAnimations() {
   // Use a single IntersectionObserver for both timeline and project cards
   // to reduce the number of observers
   animateElements();
+  // Add smooth scroll for navigation links
+  initSmoothScroll();
 }
 
 // Unified animation function for better performance
@@ -164,6 +166,68 @@ function animateElements() {
 // Accessibility enhancements
 function enhanceAccessibility() {
   enhanceSkillTagsKeyboardNavigation();
+  enhanceNavigationAccessibility();
+}
+
+// Smooth scrolling for navigation links
+function initSmoothScroll() {
+  const navLinks = document.querySelectorAll('.nav-links a, .contact-option');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      // Only process internal links
+      if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          // Calculate header height for offset
+          const headerHeight = document.querySelector('.header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Set focus to the target element for accessibility
+          targetElement.setAttribute('tabindex', '-1');
+          targetElement.focus();
+        }
+      }
+    });
+  });
+}
+
+// Enhance navigation accessibility
+function enhanceNavigationAccessibility() {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  
+  // Add active state to navigation based on scroll position
+  function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section');
+    const scrollPosition = window.scrollY + 200; // Offset to trigger sooner
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute('id');
+      
+      if (sectionId && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+  updateActiveNavLink(); // Initial check
 }
 
 // Improve keyboard navigation for skill tags with performance optimization
