@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initDarkMode();
   initAnimations();
   enhanceAccessibility();
+  initScrolledHeader();
 });
 
 // Back to top functionality with performance optimizations
@@ -169,6 +170,70 @@ function enhanceAccessibility() {
   enhanceNavigationAccessibility();
 }
 
+// Add compact header when scrolling down
+function initScrolledHeader() {
+  const header = document.querySelector(".header");
+  const scrollThreshold = 50; // px before compact header activates
+  const navLinks = document.querySelector(".nav-links");
+  
+  function checkScrollPosition() {
+    if (window.scrollY > scrollThreshold) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  }
+  
+  function setupNavScrolling() {
+    if (window.innerWidth <= 768) {
+      // Center active navigation item on mobile
+      const activeLink = navLinks.querySelector('.active');
+      if (activeLink) {
+        // Calculate position to center the active item
+        const navWidth = navLinks.offsetWidth;
+        const activeLinkPos = activeLink.offsetLeft;
+        const activeLinkWidth = activeLink.offsetWidth;
+        const scrollPos = activeLinkPos - (navWidth / 2) + (activeLinkWidth / 2);
+        
+        // Smooth scroll to center active item
+        navLinks.scrollTo({
+          left: Math.max(0, scrollPos),
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      // Reset scroll position on desktop
+      navLinks.scrollLeft = 0;
+    }
+  }
+  
+  // Use passive event listener for better performance
+  window.addEventListener("scroll", checkScrollPosition, { passive: true });
+  window.addEventListener("resize", setupNavScrolling, { passive: true });
+  
+  // Check initial position
+  checkScrollPosition();
+  
+  // Set up the navigation scrolling
+  // Wait for the DOM to fully render
+  setTimeout(setupNavScrolling, 100);
+  
+  // Also run when active nav item changes
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class' && 
+          mutation.target.classList.contains('active')) {
+        setupNavScrolling();
+      }
+    });
+  });
+  
+  // Observe all navigation links for class changes
+  navLinks.querySelectorAll('a').forEach(link => {
+    observer.observe(link, { attributes: true });
+  });
+}
+
 // Smooth scrolling for navigation links
 function initSmoothScroll() {
   const navLinks = document.querySelectorAll('.nav-links a, .contact-option');
@@ -183,39 +248,47 @@ function initSmoothScroll() {
         const targetElement = document.querySelector(targetId);
         
         if (targetElement) {
-          // Fix for section navigation
-          const headerHeight = document.querySelector('.header').offsetHeight + 20; // Add extra padding
-          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          // Add scrolled class to header to ensure consistent offset calculation
+          const header = document.querySelector(".header");
+          header.classList.add("scrolled");
           
-          // Smoother scrolling with requestAnimationFrame
-          const startPosition = window.pageYOffset;
-          const distance = targetPosition - startPosition;
-          const duration = 800; // ms
-          let startTime = null;
-          
-          function animateScroll(currentTime) {
-            if (startTime === null) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const progress = Math.min(timeElapsed / duration, 1);
+          // Get header height after ensuring scrolled class is applied
+          // Use a shorter timeout to ensure the class change has taken effect
+          setTimeout(() => {
+            // Fix for section navigation - use compact header height
+            const headerHeight = header.offsetHeight + 10; // Add small padding
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
             
-            // Easing function for smoother transition
-            const easeInOutCubic = progress => 
-              progress < 0.5
-                ? 4 * progress * progress * progress
-                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-                
-            window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+            // Smoother scrolling with requestAnimationFrame
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 600; // ms - slightly faster for better responsiveness
+            let startTime = null;
             
-            if (timeElapsed < duration) {
-              requestAnimationFrame(animateScroll);
-            } else {
-              // Set focus to the target element for accessibility
-              targetElement.setAttribute('tabindex', '-1');
-              targetElement.focus();
+            function animateScroll(currentTime) {
+              if (startTime === null) startTime = currentTime;
+              const timeElapsed = currentTime - startTime;
+              const progress = Math.min(timeElapsed / duration, 1);
+              
+              // Easing function for smoother transition
+              const easeInOutCubic = progress => 
+                progress < 0.5
+                  ? 4 * progress * progress * progress
+                  : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                  
+              window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+              
+              if (timeElapsed < duration) {
+                requestAnimationFrame(animateScroll);
+              } else {
+                // Set focus to the target element for accessibility
+                targetElement.setAttribute('tabindex', '-1');
+                targetElement.focus();
+              }
             }
-          }
-          
-          requestAnimationFrame(animateScroll);
+            
+            requestAnimationFrame(animateScroll);
+          }, 10);
         }
       }
     });
