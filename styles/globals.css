@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* For fixed header */
+  }
+  
+  body {
+    @apply text-gray-800 bg-white dark:bg-dark dark:text-gray-200 transition-colors duration-300;
+  }
+
+  ::selection {
+    @apply bg-primary-600/30;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-md font-medium transition-all duration-300 inline-flex items-center justify-center;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 dark:focus:ring-offset-dark;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-white hover:bg-secondary/90 focus:ring-2 focus:ring-secondary focus:ring-offset-2 dark:focus:ring-offset-dark;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white dark:text-primary-400 dark:border-primary-400 dark:hover:bg-primary-600 dark:hover:text-white;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md transition duration-300 hover:shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-6 relative inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    @apply absolute left-0 -bottom-2 w-12 h-1 bg-primary-600;
+  }
+
+  .skill-tag {
+    @apply px-4 py-2 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition hover:-translate-y-1 hover:bg-primary-100 dark:hover:bg-primary-900/40;
+  }
+  
+  /* Animations */
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Timeline for experience section */
+  .timeline-item {
+    @apply relative pl-10 pb-10 border-l border-gray-200 dark:border-gray-700 ml-6;
+  }
+
+  .timeline-item::before {
+    content: '';
+    @apply absolute w-4 h-4 rounded-full bg-primary-600 left-[-8px] top-1.5 z-10;
+  }
+
+  .timeline-item:last-child {
+    @apply border-transparent pb-0;
+  }
+
+  /* Skip to content link */
+  .skip-to-content {
+    @apply absolute z-50 -top-10 left-0 p-3 bg-primary-600 text-white transition-all focus:top-0;
+  }
+}
+
+/* For users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .fade-in-up {
+    animation: none;
+    opacity: 1;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
