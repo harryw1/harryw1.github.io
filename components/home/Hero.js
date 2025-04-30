@@ -19,7 +19,7 @@ const Hero = () => {
 
           {/* Brief introduction */}
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-            Dedicated and accomplished Sustainability Expert with more than 5 years of experience in driving corporate sustainability initiatives, aligning strategies with modern standards, and spearheading the development of impactful sustainability plans.
+            Dedicated and accomplished Sustainability Expert with more than 5 years of experience in driving corporate sustainability initiatives, aligning strategies with modern standards, building greenhouse gas accounting programs, and spearheading the development of impactful sustainability plans
           </p>
 
           {/* Call to action buttons */}

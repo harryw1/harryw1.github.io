@@ -2,9 +2,9 @@
 title: Corporate Sustainability Plan
 date: '2023-01-15'
 description: Developed and implemented the first comprehensive sustainability plan for NJ TRANSIT.
-image: /images/projects/sustainability-plan.jpg
+image: /images/projects/sustainability-plan.jpeg
 tags: ['Sustainability Strategy', 'Corporate Planning', 'ESG Reporting']
-liveUrl: https://example.com/sustainability-plan
+liveUrl: https://content.njtransit.com/sites/default/files/sustainability/NJ_TRANSIT_Sustainability_Plan_FINAL_WEB.pdf
 repoUrl: ''
 ---
 

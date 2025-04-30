@@ -9,7 +9,7 @@ const Bio = () => {
       <div className="lg:col-span-4 mx-auto lg:mx-0">
         <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
           <Image 
-            src="/images/profile.jpg" 
+            src="/images/profile.jpeg" 
             alt="Harrison Weiss" 
             fill
             className="object-cover"
