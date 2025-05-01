@@ -41,10 +41,8 @@ The implementation phase involved:
 
 The implementation of the Corporate Sustainability Plan achieved significant results:
 
-- **Carbon Footprint Reduction**: Reduced carbon emissions by approximately 15% in the first year of implementation
 - **Organizational Alignment**: Created a unified approach to sustainability across all departments
 - **Enhanced Public Image**: Improved public perception of NJ TRANSIT as an environmentally responsible organization
-- **Operational Efficiency**: Identified and implemented sustainability initiatives that also improved operational efficiency
 - **Cost Savings**: Many sustainability initiatives resulted in cost savings through reduced energy consumption and waste
 
 ## Conclusion

@@ -2,9 +2,9 @@
 title: Clean Energy Fund Acquisition
 date: '2022-11-10'
 description: Secured over $2 million in State clean energy funds for energy-efficiency projects.
-image: /images/projects/clean-energy.jpg
+image: /images/projects/clean-energy.jpeg
 tags: ['Clean Energy', 'Funding', 'Energy Efficiency']
-liveUrl: ''
+liveUrl: 'https://www.njcleanenergy.com/main/about-njcep/about-njcep'
 repoUrl: ''
 ---
 

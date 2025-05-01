@@ -1,22 +1,11 @@
-import { useEffect, useState } from 'react';
-import { MDXProvider } from '@mdx-js/react';
 import { getFiles, getFileBySlug, serializeMdx } from '@/lib/mdx';
 import Layout from '@/components/layout/Layout';
 import SectionContainer from '@/components/common/SectionContainer';
-import MDXComponents from '@/components/common/MDXComponents';
-import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import { FiExternalLink, FiGithub } from 'react-icons/fi';
 
 export default function ProjectPage({ project }) {
-  const { frontmatter, mdxComponent } = project;
-  const [MdxContent, setMdxContent] = useState(null);
-  
-  useEffect(() => {
-    if (mdxComponent) {
-      setMdxContent(() => mdxComponent);
-    }
-  }, [mdxComponent]);
+  const { frontmatter, contentHtml } = project;
   
   return (
     <Layout
@@ -79,23 +68,20 @@ export default function ProjectPage({ project }) {
           {/* Cover Image */}
           {frontmatter.image && (
             <div className="relative w-full h-96 mb-10 rounded-lg overflow-hidden">
-              <Image 
+              <img 
                 src={frontmatter.image} 
                 alt={frontmatter.title}
-                fill
-                className="object-cover"
-                priority
+                className="object-cover w-full h-full"
               />
             </div>
           )}
         </div>
         
         {/* Project Content */}
-        <div className="max-w-3xl mx-auto prose dark:prose-dark">
-          <MDXProvider components={MDXComponents}>
-            {MdxContent && <MdxContent />}
-          </MDXProvider>
-        </div>
+        <div 
+          className="max-w-3xl mx-auto prose dark:prose-dark"
+          dangerouslySetInnerHTML={{ __html: contentHtml }}
+        />
       </SectionContainer>
     </Layout>
   );
@@ -117,13 +103,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
   const { frontmatter, content } = getFileBySlug('project', slug);
-  const { component } = await serializeMdx(content);
+  const { contentHtml } = await serializeMdx(content);
   
   return {
     props: {
       project: {
         frontmatter,
-        mdxComponent: component,
+        contentHtml,
       },
     },
   };
