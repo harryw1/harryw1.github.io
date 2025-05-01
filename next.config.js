@@ -1,3 +1,11 @@
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [require('remark-gfm')],
+    rehypePlugins: [require('rehype-slug'), require('rehype-highlight')],
+  },
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -8,18 +16,8 @@ const nextConfig = {
   // Uncomment and modify if deploying to a subdirectory
   // basePath: '/your-repo-name',
   
-  // Configure webpack to handle MDX files
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.mdx?$/,
-      use: [
-        {
-          loader: '@mdx-js/loader',
-        },
-      ],
-    });
-    return config;
-  },
+  // Configure Next.js to handle MDX files
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 };
 
-module.exports = nextConfig;
+module.exports = withMDX(nextConfig);

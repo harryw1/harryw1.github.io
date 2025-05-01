@@ -1,4 +1,5 @@
-import { MDXRemote } from 'next-mdx-remote';
+import { useEffect, useState } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import { getFiles, getFileBySlug, serializeMdx } from '@/lib/mdx';
 import Layout from '@/components/layout/Layout';
 import SectionContainer from '@/components/common/SectionContainer';
@@ -6,7 +7,14 @@ import MDXComponents from '@/components/common/MDXComponents';
 import { formatDate, getReadingTime } from '@/lib/utils';
 
 export default function BlogPost({ post }) {
-  const { frontmatter, mdxContent, readingTime } = post;
+  const { frontmatter, mdxComponent, readingTime } = post;
+  const [MdxContent, setMdxContent] = useState(null);
+  
+  useEffect(() => {
+    if (mdxComponent) {
+      setMdxContent(() => mdxComponent);
+    }
+  }, [mdxComponent]);
   
   return (
     <Layout
@@ -42,7 +50,9 @@ export default function BlogPost({ post }) {
           
           {/* Post Content */}
           <div className="prose dark:prose-dark max-w-none">
-            <MDXRemote {...mdxContent} components={MDXComponents} />
+            <MDXProvider components={MDXComponents}>
+              {MdxContent && <MdxContent />}
+            </MDXProvider>
           </div>
         </article>
       </SectionContainer>
@@ -66,7 +76,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
   const { frontmatter, content } = getFileBySlug('blog', slug);
-  const mdxContent = await serializeMdx(content);
+  const { component } = await serializeMdx(content);
   
   // Calculate reading time
   const readingTime = getReadingTime(content);
@@ -75,7 +85,7 @@ export async function getStaticProps({ params }) {
     props: {
       post: {
         frontmatter,
-        mdxContent,
+        mdxComponent: component,
         readingTime,
       },
     },

@@ -1,4 +1,5 @@
-import { MDXRemote } from 'next-mdx-remote';
+import { useEffect, useState } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import { getFiles, getFileBySlug, serializeMdx } from '@/lib/mdx';
 import Layout from '@/components/layout/Layout';
 import SectionContainer from '@/components/common/SectionContainer';
@@ -8,7 +9,14 @@ import Button from '@/components/ui/Button';
 import { FiExternalLink, FiGithub } from 'react-icons/fi';
 
 export default function ProjectPage({ project }) {
-  const { frontmatter, mdxContent } = project;
+  const { frontmatter, mdxComponent } = project;
+  const [MdxContent, setMdxContent] = useState(null);
+  
+  useEffect(() => {
+    if (mdxComponent) {
+      setMdxContent(() => mdxComponent);
+    }
+  }, [mdxComponent]);
   
   return (
     <Layout
@@ -84,7 +92,9 @@ export default function ProjectPage({ project }) {
         
         {/* Project Content */}
         <div className="max-w-3xl mx-auto prose dark:prose-dark">
-          <MDXRemote {...mdxContent} components={MDXComponents} />
+          <MDXProvider components={MDXComponents}>
+            {MdxContent && <MdxContent />}
+          </MDXProvider>
         </div>
       </SectionContainer>
     </Layout>
@@ -107,13 +117,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
   const { frontmatter, content } = getFileBySlug('project', slug);
-  const mdxContent = await serializeMdx(content);
+  const { component } = await serializeMdx(content);
   
   return {
     props: {
       project: {
         frontmatter,
-        mdxContent,
+        mdxComponent: component,
       },
     },
   };
